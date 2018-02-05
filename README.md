@@ -1,4 +1,4 @@
-# React Style Elements
+# Hyper Style Elements
 
 A partial port of the Elm library [style-elements][1] built upon [hyperHTML][2].
 
