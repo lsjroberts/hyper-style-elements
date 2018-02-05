@@ -43,40 +43,115 @@ export const layout = (
   });
 };
 
-export const row = partial(createMulti, 'div', {
+const createMultiDiv = partial(
+  createMulti,
+  (className, style, children) =>
+    wire()`<div class=${className} style=${style}>${children}</div>`
+);
+
+export const row = partial(createMultiDiv, {
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'nowrap'
 });
-export const wrappedRow = partial(createMulti, 'div', {
+export const wrappedRow = partial(createMultiDiv, {
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap'
 });
-export const column = partial(createMulti, 'div', {
+export const column = partial(createMultiDiv, {
   display: 'flex',
   flexDirection: 'column',
   flexWrap: 'nowrap'
 });
-export const wrappedColumn = partial(createMulti, 'div', {
+export const wrappedColumn = partial(createMultiDiv, {
   display: 'flex',
   flexDirection: 'column',
   flexWrap: 'wrap'
 });
 
 // -- Single Child Elements
-export const el = partial(createSingle, 'div', {});
+export const el = partial(
+  createSingle,
+  (className, style, child) =>
+    wire()`<div class=${className} style=${style}>${child}</div>`,
+  {}
+);
 
-export const paragraph = partial(createMulti, 'p', {});
-export const link = partial(createSingle, 'a', {});
-export const h1 = partial(createSingle, 'h1', {});
-export const h2 = partial(createSingle, 'h2', {});
-export const h3 = partial(createSingle, 'h3', {});
-export const h4 = partial(createSingle, 'h4', {});
-export const h5 = partial(createSingle, 'h5', {});
-export const h6 = partial(createSingle, 'h6', {});
+export const text = t => wire()`${t}`;
 
-export const article = partial(createSingle, 'article', {});
-export const footer = partial(createSingle, 'footer', {});
-export const header = partial(createSingle, 'header', {});
-export const navigation = partial(createSingle, 'nav', {});
+export const paragraph = partial(
+  createMulti,
+  (className, style, children) =>
+    wire()`<p class=${className} style=${style}>${children}</p>`,
+  {}
+);
+
+export const link = partial(
+  createSingle,
+  (className, style, child) =>
+    wire()`<a class=${className} style=${style}>${child}</a>`,
+  {}
+);
+
+export const h1 = partial(
+  createSingle,
+  (className, style, child) =>
+    wire()`<h1 class=${className} style=${style}>${child}</h1>`,
+  {}
+);
+export const h2 = partial(
+  createSingle,
+  (className, style, child) =>
+    wire()`<h2 class=${className} style=${style}>${child}</h2>`,
+  {}
+);
+export const h3 = partial(
+  createSingle,
+  (className, style, child) =>
+    wire()`<h3 class=${className} style=${style}>${child}</h3>`,
+  {}
+);
+export const h4 = partial(
+  createSingle,
+  (className, style, child) =>
+    wire()`<h4 class=${className} style=${style}>${child}</h4>`,
+  {}
+);
+export const h5 = partial(
+  createSingle,
+  (className, style, child) =>
+    wire()`<h5 class=${className} style=${style}>${child}</h5>`,
+  {}
+);
+export const h6 = partial(
+  createSingle,
+  (className, style, child) =>
+    wire()`<h6 class=${className} style=${style}>${child}</h6>`,
+  {}
+);
+
+export const article = partial(
+  createSingle,
+  (className, style, child) =>
+    wire()`<article class=${className} style=${style}>${child}</article>`,
+  {}
+);
+export const footer = partial(
+  createSingle,
+  (className, style, child) =>
+    wire()`<footer class=${className} style=${style}>${child}</footer>`,
+  {}
+);
+export const header = partial(
+  createSingle,
+  (className, style, child) =>
+    wire()`<header class=${className} style=${style}>${child}</header>`,
+  {}
+);
+export const navigation = partial(
+  createSingle,
+  (className, style, child) =>
+    wire()`<nav class=${className} style=${style}>${child}</nav>`,
+  {}
+);

@@ -14,45 +14,47 @@ import { Attribute, Element, Layout, TransformedAttributes } from './types';
 
 // -- Elements
 export const createElement = (
-  type: string,
+  wrappedElement,
   fixedStyleAttr,
   style: string,
   attrs: Array<Attribute>,
-  children: Array<Layout | Element | string>
+  children: Array<Layout | Element | string> | Layout | Element | string
 ): Element => {
   const transformedAttrs = transformAttrs(attrs);
+
+  const classAttr = ['el', style].filter(Boolean).join(' ');
   const styleAttr = merge(transformedAttrs.style, fixedStyleAttr);
 
-  // console.log({ type, fixedStyleAttr, style, attrs, children });
+  const element = wrappedElement(classAttr, styleAttr, children);
 
-  return wire()`
-    <div
-      class=${['el', style].filter(Boolean).join(' ')}
-      style=${styleAttr}
-    >
-      ${children}
-    </div>
-  `;
+  const extraAttrs = omit(transformedAttrs, ['style', 'spacing']);
+  for (const key in extraAttrs) {
+    element.setAttribute(key, extraAttrs[key]);
+  }
+
+  console.log(element, children);
+
+  return element;
 };
 
 export const createSingle = (
-  type: string,
+  wrappedElement,
   fixedStyleAttr,
   style: string,
   attrs: Array<Attribute>,
   child: Element
 ): Element => {
-  return createElement(type, fixedStyleAttr, style, attrs, [child]);
+  return createElement(wrappedElement, fixedStyleAttr, style, attrs, child);
 };
 
 export const createMulti = (
-  type: string,
+  wrappedElement,
   fixedStyleAttr,
   style: string,
   attrs: Array<Attribute>,
   children: Array<Layout | Element | string>
 ): Element => {
-  return createElement(type, fixedStyleAttr, style, attrs, children);
+  return createElement(wrappedElement, fixedStyleAttr, style, attrs, children);
 };
 
 // -- Attributes
