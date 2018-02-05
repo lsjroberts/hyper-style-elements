@@ -1,0 +1,27 @@
+{
+  "name": "hyper-style-elements",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "files": ["dist"],
+  "scripts": {
+    "build": "rm -rf dist && tsc && cp package.json dist/package.json",
+    "build:watch": "yarn run build && tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "prettier": "^1.10.2",
+    "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.92",
+    "@types/react": "^16.0.34",
+    "@types/react-dom": "^16.0.3",
+    "hyperhtml": "^2.5.8",
+    "lodash": "^4.17.4"
+  }
+}
