@@ -89,8 +89,10 @@ export const paragraph = partial(
 
 export const link = partial(
   createSingle,
-  (className, style, child) =>
-    wire()`<a class=${className} style=${style}>${child}</a>`,
+  (className, style, child, extraAttrs) =>
+    wire()`<a class=${className} style=${style} href=${
+      extraAttrs.href
+    }>${child}</a>`,
   {}
 );
 

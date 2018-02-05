@@ -24,15 +24,16 @@ export const createElement = (
 
   const classAttr = ['el', style].filter(Boolean).join(' ');
   const styleAttr = merge(transformedAttrs.style, fixedStyleAttr);
-
-  const element = wrappedElement(classAttr, styleAttr, children);
-
   const extraAttrs = omit(transformedAttrs, ['style', 'spacing']);
-  for (const key in extraAttrs) {
-    element.setAttribute(key, extraAttrs[key]);
-  }
 
-  console.log(element, children);
+  const element = wrappedElement(classAttr, styleAttr, children, extraAttrs);
+
+  for (const key in extraAttrs) {
+    if (!element.hasAttribute(key)) {
+      console.log(element, 'setAttribute', key, extraAttrs[key]);
+      element.setAttribute(key, extraAttrs[key]);
+    }
+  }
 
   return element;
 };
