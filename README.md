@@ -25,12 +25,7 @@ const styles = Style.styleSheet([
   ])
 ]);
 
-const view = Element.layout(
-  styles(),
-  el(styles.title, [Attributes.padding(10)], 'Hello!')
-);
-
-ReactDOM.render(view, document.getElementById('main'));
+Element.layout(styles(), el(styles.title, [Attributes.padding(10)], 'Hello!'));
 ```
 
 ### Layouts
