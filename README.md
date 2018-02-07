@@ -25,7 +25,10 @@ const styles = Style.styleSheet([
   ])
 ]);
 
-Element.layout(styles(), el(styles.title, [Attributes.padding(10)], 'Hello!'));
+Element.fullscreen(
+  styles(),
+  el(styles.title, [Attributes.padding(10)], 'Hello!')
+);
 ```
 
 ### Layouts
@@ -33,7 +36,7 @@ Element.layout(styles(), el(styles.title, [Attributes.padding(10)], 'Hello!'));
 ```js
 import { row, column } from "react-style-elements/elements";
 
-const view = Element.layout(
+const view = Element.fullscreen(
   styles(),
   column(
     null,
@@ -53,7 +56,22 @@ const view = Element.layout(
 );
 ```
 
-<!--
+### State & Redux
+
+```js
+import { connectFullscreen } from 'hyper-style-elements/redux';
+import { createStore } from 'redux';
+
+import reducers from './reducers';
+
+const store = createStore(reducers);
+
+connectFullscreen(store)(
+  () => styles(),
+  (state, dispatch) => el(styles.app, null, app(state, dispatch))
+);
+```
+
 ### Themes
 
 Each property in the array passed into the second argument of `style()` can be a callback. The arguments passed in are those given to the `styles()` in `layout()`, and it should return an array of properties.
@@ -70,7 +88,7 @@ const styles = styleSheet([
   ])
 ]);
 
-layout(styles('some value'));
+fullscreen(styles('some value'));
 ```
 
 This can be used to create a themed stylesheet that can be changed at runtime.
@@ -94,32 +112,11 @@ const styles = styleSheet([
   ),
 ]);
 
-const view = connect(({ theme }) =>
-  layout(
-    styles(theme),
-    null,
-    el(styles.app, [], 'Hello!')
-  )
+const view = connectFullscreen(store)(
+  (state) => styles(state.theme),
+  () => el(styles.app, [], 'Hello!')
 );
 ```
-
-This could be cleaner with a custom `themed()` function.
-
-```js
-const themed = (theme = 'light') => themedStyles => themedStyles[theme] || [];
-
-const styles = styleSheet([
-  style('app', [
-    size(16),
-    weight(700),
-    themed({
-      light: [background(rgb(240, 240, 240)), text(rgb(30, 30, 30))],
-      dark: [background(rgb(30, 30, 30)), text(rgb(240, 240, 240))]
-    })
-  ])
-]);
-```
--->
 
 [1]: http://package.elm-lang.org/packages/mdgriffith/style-elements/latest/
 [2]: https://viperhtml.js.org/
