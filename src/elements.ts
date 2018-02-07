@@ -15,6 +15,7 @@ normalized; // HACK: force import
 
 // -- Layout
 export const layout = (
+  node,
   styleSheet: StyleSheet,
   child: Element | Layout
 ): void => {
@@ -25,24 +26,33 @@ export const layout = (
     )
     .join('');
 
-  console.log(styleSheet);
+  const normalizedStylesElement = document.createElement('style');
+  normalizedStylesElement.type = 'text/css';
+  normalizedStylesElement.appendChild(document.createTextNode(normalized));
+  document.head.appendChild(normalizedStylesElement);
 
+  const stylesElement = document.createElement('style');
+  stylesElement.type = 'text/css';
+  stylesElement.appendChild(document.createTextNode(styles));
+  document.head.appendChild(stylesElement);
+
+  bind(node)`
+    <div class="style-elements">
+      ${child}
+    </div>
+  `;
+};
+
+export const fullscreen = (
+  styleSheet: StyleSheet,
+  child: Element | Layout
+): void => {
   addEventListener('DOMContentLoaded', () => {
-    const styleElement = document.createElement('style');
-    styleElement.type = 'text/css';
-    styleElement.appendChild(
-      document.createTextNode(`${normalized}\n${styles}`)
-    );
-    document.head.appendChild(styleElement);
-
-    bind(document.body)`
-      <div class="style-elements">
-        ${child}
-      </div>
-    `;
+    layout(document.body, styleSheet, child);
   });
 };
 
+// -- Multi Child Elements
 const createMultiDiv = partial(
   createMulti,
   (className, style, children) =>
